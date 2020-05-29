@@ -11,10 +11,10 @@ config :graph_banking,
   ecto_repos: [GraphBanking.Repo]
 
 # Configures the endpoint
-config :graph_banking, GraphBankingWeb.Endpoint,
+config :graph_banking, GraphBanking.Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "9pJFqjohSw9H+ZB9nWqmpYv45ytmVDgO/gPFG8geNhAgdmULp+sEAOJO0aFKN0F2",
-  render_errors: [view: GraphBankingWeb.ErrorView, accepts: ~w(json), layout: false],
+  render_errors: [view: GraphBanking.Web.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: GraphBanking.PubSub,
   live_view: [signing_salt: "Kmw1xtjz"]
 

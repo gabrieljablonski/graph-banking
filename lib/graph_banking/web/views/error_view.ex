@@ -1,5 +1,5 @@
-defmodule GraphBankingWeb.ErrorView do
-  use GraphBankingWeb, :view
+defmodule GraphBanking.Web.ErrorView do
+  use GraphBanking.Web, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

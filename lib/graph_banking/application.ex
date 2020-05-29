@@ -10,11 +10,11 @@ defmodule GraphBanking.Application do
       # Start the Ecto repository
       GraphBanking.Repo,
       # Start the Telemetry supervisor
-      GraphBankingWeb.Telemetry,
+      GraphBanking.Web.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: GraphBanking.PubSub},
       # Start the Endpoint (http/https)
-      GraphBankingWeb.Endpoint
+      GraphBanking.Web.Endpoint
       # Start a worker by calling: GraphBanking.Worker.start_link(arg)
       # {GraphBanking.Worker, arg}
     ]
@@ -28,7 +28,7 @@ defmodule GraphBanking.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    GraphBankingWeb.Endpoint.config_change(changed, removed)
+    GraphBanking.Web.Endpoint.config_change(changed, removed)
     :ok
   end
 end

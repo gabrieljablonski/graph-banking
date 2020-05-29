@@ -1,8 +1,8 @@
-defmodule GraphBankingWeb.UserSocket do
+defmodule GraphBanking.Web.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", GraphBankingWeb.RoomChannel
+  # channel "room:*", GraphBanking.Web.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -27,7 +27,7 @@ defmodule GraphBankingWeb.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     GraphBankingWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     GraphBanking.Web.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true

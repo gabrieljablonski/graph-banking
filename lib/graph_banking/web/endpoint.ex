@@ -1,4 +1,4 @@
-defmodule GraphBankingWeb.Endpoint do
+defmodule GraphBanking.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :graph_banking
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule GraphBankingWeb.Endpoint do
     signing_salt: "dj3jUlQO"
   ]
 
-  socket "/socket", GraphBankingWeb.UserSocket,
+  socket "/socket", GraphBanking.Web.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -48,5 +48,5 @@ defmodule GraphBankingWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug GraphBankingWeb.Router
+  plug GraphBanking.Web.Router
 end

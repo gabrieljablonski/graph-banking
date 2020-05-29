@@ -1,4 +1,4 @@
-defmodule GraphBankingWeb.Telemetry do
+defmodule GraphBanking.Web.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -49,7 +49,7 @@ defmodule GraphBankingWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {GraphBankingWeb, :count_users, []}
+      # {GraphBanking.Web, :count_users, []}
     ]
   end
 end

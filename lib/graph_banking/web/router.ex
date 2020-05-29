@@ -1,11 +1,11 @@
-defmodule GraphBankingWeb.Router do
-  use GraphBankingWeb, :router
+defmodule GraphBanking.Web.Router do
+  use GraphBanking.Web, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", GraphBankingWeb do
+  scope "/api", GraphBanking.Web do
     pipe_through :api
   end
 
@@ -21,7 +21,7 @@ defmodule GraphBankingWeb.Router do
 
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: GraphBankingWeb.Telemetry
+      live_dashboard "/dashboard", metrics: GraphBanking.Web.Telemetry
     end
   end
 end

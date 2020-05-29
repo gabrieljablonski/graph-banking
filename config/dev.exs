@@ -15,7 +15,7 @@ config :graph_banking, GraphBanking.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :graph_banking, GraphBankingWeb.Endpoint,
+config :graph_banking, GraphBanking.Web.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,

@@ -1,12 +1,12 @@
-defmodule GraphBankingWeb do
+defmodule GraphBanking.Web do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use GraphBankingWeb, :controller
-      use GraphBankingWeb, :view
+      use GraphBanking.Web, :controller
+      use GraphBanking.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule GraphBankingWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: GraphBankingWeb
+      use Phoenix.Controller, namespace: GraphBanking.Web
 
       import Plug.Conn
-      import GraphBankingWeb.Gettext
-      alias GraphBankingWeb.Router.Helpers, as: Routes
+      import GraphBanking.Web.Gettext
+      alias GraphBanking.Web.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/graph_banking_web/templates",
-        namespace: GraphBankingWeb
+        root: "lib/graph_banking/web/templates",
+        namespace: GraphBanking.Web
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -54,7 +54,7 @@ defmodule GraphBankingWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import GraphBankingWeb.Gettext
+      import GraphBanking.Web.Gettext
     end
   end
 
@@ -63,9 +63,9 @@ defmodule GraphBankingWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import GraphBankingWeb.ErrorHelpers
-      import GraphBankingWeb.Gettext
-      alias GraphBankingWeb.Router.Helpers, as: Routes
+      import GraphBanking.Web.ErrorHelpers
+      import GraphBanking.Web.Gettext
+      alias GraphBanking.Web.Router.Helpers, as: Routes
     end
   end
 
