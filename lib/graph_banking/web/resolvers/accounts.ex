@@ -44,7 +44,7 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
   end
 
   defp perform_transaction(%Account{current_balance: balance}, _, amount)
-    when balance < amount do
+       when balance < amount do
     {:error, "sender's balance ($#{balance}) is insufficient"}
   end
 
@@ -52,24 +52,24 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
     %Account{id: sender_id, current_balance: sender_balance} = sender_account
     %Account{id: recipient_id, current_balance: recipient_balance} = recipient_account
 
-    {:ok, _} = Accounts.update_account(
-      sender_account,
-      %{current_balance: Decimal.sub(sender_balance, amount)}
-    )
+    {:ok, _} =
+      Accounts.update_account(
+        sender_account,
+        %{current_balance: Decimal.sub(sender_balance, amount)}
+      )
 
-    {:ok, _} = Accounts.update_account(
-      recipient_account,
-      %{current_balance: Decimal.add(recipient_balance, amount)}
-    )
+    {:ok, _} =
+      Accounts.update_account(
+        recipient_account,
+        %{current_balance: Decimal.add(recipient_balance, amount)}
+      )
 
-    case Accounts.create_transaction(
-      %{
-        sender_id: sender_id,
-        recipient_id: recipient_id,
-        amount: amount,
-        when: DateTime.utc_now()
-      }
-    ) do
+    case Accounts.create_transaction(%{
+           sender_id: sender_id,
+           recipient_id: recipient_id,
+           amount: amount,
+           when: DateTime.utc_now()
+         }) do
       {:ok, transaction} -> {:ok, transaction}
       {:error, message} -> {:error, message}
     end

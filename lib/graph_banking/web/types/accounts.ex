@@ -13,37 +13,42 @@ defmodule GraphBanking.Web.Schema.Types.Accounts do
     field :when, non_null(:string)
 
     field :sender, non_null(:account) do
-      resolve fn(%Transaction{sender_id: id} = transaction, _args, info) ->
+      resolve(fn %Transaction{sender_id: id} = transaction, _args, info ->
         Resolvers.Accounts.account(transaction, %{id: id}, info)
-      end
+      end)
     end
+
     field :recipient, non_null(:account) do
-      resolve fn(%Transaction{recipient_id: id} = transaction, _args, info) ->
+      resolve(fn %Transaction{recipient_id: id} = transaction, _args, info ->
         Resolvers.Accounts.account(transaction, %{id: id}, info)
-      end
+      end)
     end
   end
 
   object :account do
     field :id, non_null(:id)
     field :current_balance, non_null(:string)
+
     field :sent_transactions, :transaction |> non_null() |> list_of() |> non_null() do
-      resolve fn(%Account{} = account, _, _) ->
+      resolve(fn %Account{} = account, _, _ ->
         transactions =
           account
           |> Ecto.assoc(:sent_transactions)
-          |> Repo.all
+          |> Repo.all()
+
         {:ok, transactions}
-      end
+      end)
     end
+
     field :received_transactions, :transaction |> non_null() |> list_of() |> non_null() do
-      resolve fn(%Account{} = account, _, _) ->
+      resolve(fn %Account{} = account, _, _ ->
         transactions =
           account
           |> Ecto.assoc(:received_transactions)
-          |> Repo.all
+          |> Repo.all()
+
         {:ok, transactions}
-      end
+      end)
     end
   end
 end

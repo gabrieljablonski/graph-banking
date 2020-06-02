@@ -8,8 +8,7 @@ defmodule GraphBanking.Web.Router do
   scope "/" do
     pipe_through :api
 
-    forward "/api", Absinthe.Plug,
-      schema: GraphBanking.Web.Schema.Schema
+    forward "/api", Absinthe.Plug, schema: GraphBanking.Web.Schema.Schema
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: GraphBanking.Web.Schema,

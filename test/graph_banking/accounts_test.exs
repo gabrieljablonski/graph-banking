@@ -6,8 +6,18 @@ defmodule GraphBanking.AccountsTest do
   describe "transactions" do
     alias GraphBanking.Accounts.Transaction
 
-    @valid_attrs %{address: "some address", amount: "120.5", uuid: "7488a646-e31f-11e4-aace-600308960662", when: "2010-04-17T14:00:00Z"}
-    @update_attrs %{address: "some updated address", amount: "456.7", uuid: "7488a646-e31f-11e4-aace-600308960668", when: "2011-05-18T15:01:01Z"}
+    @valid_attrs %{
+      address: "some address",
+      amount: "120.5",
+      uuid: "7488a646-e31f-11e4-aace-600308960662",
+      when: "2010-04-17T14:00:00Z"
+    }
+    @update_attrs %{
+      address: "some updated address",
+      amount: "456.7",
+      uuid: "7488a646-e31f-11e4-aace-600308960668",
+      when: "2011-05-18T15:01:01Z"
+    }
     @invalid_attrs %{address: nil, amount: nil, uuid: nil, when: nil}
 
     def transaction_fixture(attrs \\ %{}) do
@@ -43,7 +53,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
-      assert {:ok, %Transaction{} = transaction} = Accounts.update_transaction(transaction, @update_attrs)
+
+      assert {:ok, %Transaction{} = transaction} =
+               Accounts.update_transaction(transaction, @update_attrs)
+
       assert transaction.address == "some updated address"
       assert transaction.amount == Decimal.new("456.7")
       assert transaction.uuid == "7488a646-e31f-11e4-aace-600308960668"
@@ -52,7 +65,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with invalid data returns error changeset" do
       transaction = transaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_transaction(transaction, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_transaction(transaction, @invalid_attrs)
+
       assert transaction == Accounts.get_transaction!(transaction.id)
     end
 
@@ -132,8 +148,20 @@ defmodule GraphBanking.AccountsTest do
   describe "transactions" do
     alias GraphBanking.Accounts.Transaction
 
-    @valid_attrs %{amount: "120.5", recipient: "7488a646-e31f-11e4-aace-600308960662", sender: "7488a646-e31f-11e4-aace-600308960662", uuid: "7488a646-e31f-11e4-aace-600308960662", when: "2010-04-17T14:00:00Z"}
-    @update_attrs %{amount: "456.7", recipient: "7488a646-e31f-11e4-aace-600308960668", sender: "7488a646-e31f-11e4-aace-600308960668", uuid: "7488a646-e31f-11e4-aace-600308960668", when: "2011-05-18T15:01:01Z"}
+    @valid_attrs %{
+      amount: "120.5",
+      recipient: "7488a646-e31f-11e4-aace-600308960662",
+      sender: "7488a646-e31f-11e4-aace-600308960662",
+      uuid: "7488a646-e31f-11e4-aace-600308960662",
+      when: "2010-04-17T14:00:00Z"
+    }
+    @update_attrs %{
+      amount: "456.7",
+      recipient: "7488a646-e31f-11e4-aace-600308960668",
+      sender: "7488a646-e31f-11e4-aace-600308960668",
+      uuid: "7488a646-e31f-11e4-aace-600308960668",
+      when: "2011-05-18T15:01:01Z"
+    }
     @invalid_attrs %{amount: nil, recipient: nil, sender: nil, uuid: nil, when: nil}
 
     def transaction_fixture(attrs \\ %{}) do
@@ -170,7 +198,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
-      assert {:ok, %Transaction{} = transaction} = Accounts.update_transaction(transaction, @update_attrs)
+
+      assert {:ok, %Transaction{} = transaction} =
+               Accounts.update_transaction(transaction, @update_attrs)
+
       assert transaction.amount == Decimal.new("456.7")
       assert transaction.recipient == "7488a646-e31f-11e4-aace-600308960668"
       assert transaction.sender == "7488a646-e31f-11e4-aace-600308960668"
@@ -180,7 +211,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with invalid data returns error changeset" do
       transaction = transaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_transaction(transaction, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_transaction(transaction, @invalid_attrs)
+
       assert transaction == Accounts.get_transaction!(transaction.id)
     end
 
@@ -260,8 +294,20 @@ defmodule GraphBanking.AccountsTest do
   describe "transactions" do
     alias GraphBanking.Accounts.Transaction
 
-    @valid_attrs %{amount: "120.5", id: "7488a646-e31f-11e4-aace-600308960662", recipient: "7488a646-e31f-11e4-aace-600308960662", sender: "7488a646-e31f-11e4-aace-600308960662", when: "2010-04-17T14:00:00Z"}
-    @update_attrs %{amount: "456.7", id: "7488a646-e31f-11e4-aace-600308960668", recipient: "7488a646-e31f-11e4-aace-600308960668", sender: "7488a646-e31f-11e4-aace-600308960668", when: "2011-05-18T15:01:01Z"}
+    @valid_attrs %{
+      amount: "120.5",
+      id: "7488a646-e31f-11e4-aace-600308960662",
+      recipient: "7488a646-e31f-11e4-aace-600308960662",
+      sender: "7488a646-e31f-11e4-aace-600308960662",
+      when: "2010-04-17T14:00:00Z"
+    }
+    @update_attrs %{
+      amount: "456.7",
+      id: "7488a646-e31f-11e4-aace-600308960668",
+      recipient: "7488a646-e31f-11e4-aace-600308960668",
+      sender: "7488a646-e31f-11e4-aace-600308960668",
+      when: "2011-05-18T15:01:01Z"
+    }
     @invalid_attrs %{amount: nil, id: nil, recipient: nil, sender: nil, when: nil}
 
     def transaction_fixture(attrs \\ %{}) do
@@ -298,7 +344,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
-      assert {:ok, %Transaction{} = transaction} = Accounts.update_transaction(transaction, @update_attrs)
+
+      assert {:ok, %Transaction{} = transaction} =
+               Accounts.update_transaction(transaction, @update_attrs)
+
       assert transaction.amount == Decimal.new("456.7")
       assert transaction.id == "7488a646-e31f-11e4-aace-600308960668"
       assert transaction.recipient == "7488a646-e31f-11e4-aace-600308960668"
@@ -308,7 +357,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with invalid data returns error changeset" do
       transaction = transaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_transaction(transaction, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_transaction(transaction, @invalid_attrs)
+
       assert transaction == Accounts.get_transaction!(transaction.id)
     end
 
@@ -327,8 +379,16 @@ defmodule GraphBanking.AccountsTest do
   describe "transactions" do
     alias GraphBanking.Accounts.Transaction
 
-    @valid_attrs %{amount: "120.5", uuid: "7488a646-e31f-11e4-aace-600308960662", when: "2010-04-17T14:00:00Z"}
-    @update_attrs %{amount: "456.7", uuid: "7488a646-e31f-11e4-aace-600308960668", when: "2011-05-18T15:01:01Z"}
+    @valid_attrs %{
+      amount: "120.5",
+      uuid: "7488a646-e31f-11e4-aace-600308960662",
+      when: "2010-04-17T14:00:00Z"
+    }
+    @update_attrs %{
+      amount: "456.7",
+      uuid: "7488a646-e31f-11e4-aace-600308960668",
+      when: "2011-05-18T15:01:01Z"
+    }
     @invalid_attrs %{amount: nil, uuid: nil, when: nil}
 
     def transaction_fixture(attrs \\ %{}) do
@@ -363,7 +423,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
-      assert {:ok, %Transaction{} = transaction} = Accounts.update_transaction(transaction, @update_attrs)
+
+      assert {:ok, %Transaction{} = transaction} =
+               Accounts.update_transaction(transaction, @update_attrs)
+
       assert transaction.amount == Decimal.new("456.7")
       assert transaction.uuid == "7488a646-e31f-11e4-aace-600308960668"
       assert transaction.when == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
@@ -371,7 +434,10 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with invalid data returns error changeset" do
       transaction = transaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_transaction(transaction, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_transaction(transaction, @invalid_attrs)
+
       assert transaction == Accounts.get_transaction!(transaction.id)
     end
 
@@ -484,14 +550,20 @@ defmodule GraphBanking.AccountsTest do
 
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
-      assert {:ok, %Transaction{} = transaction} = Accounts.update_transaction(transaction, @update_attrs)
+
+      assert {:ok, %Transaction{} = transaction} =
+               Accounts.update_transaction(transaction, @update_attrs)
+
       assert transaction.amount == Decimal.new("456.7")
       assert transaction.when == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
     end
 
     test "update_transaction/2 with invalid data returns error changeset" do
       transaction = transaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_transaction(transaction, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_transaction(transaction, @invalid_attrs)
+
       assert transaction == Accounts.get_transaction!(transaction.id)
     end
 
