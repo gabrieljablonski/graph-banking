@@ -6,7 +6,7 @@ defmodule GraphBanking.Accounts do
   import Ecto.Query, warn: false
   alias GraphBanking.Repo
 
-  alias GraphBanking.Accounts.Account
+  alias GraphBanking.Accounts.{Account, Transaction}
 
   @doc """
   Returns the list of accounts.
@@ -36,6 +36,8 @@ defmodule GraphBanking.Accounts do
 
   """
   def get_account!(id), do: Repo.get!(Account, id)
+
+  def get_account(id), do: Repo.get(Account, id)
 
   @doc """
   Creates a account.
@@ -102,7 +104,16 @@ defmodule GraphBanking.Accounts do
     Account.changeset(account, attrs)
   end
 
-  alias GraphBanking.Accounts.Transaction
+  @spec list_transactions(atom | %{id: any}) :: any
+  @doc """
+  Returns a list of transactions related to `account`.
+  """
+  def list_transactions(%Account{} = account) do
+    from(
+       t in Transaction,
+       where: t.sender_id == ^account.id or t.recipient_id == ^account.id
+    ) |> Repo.all()
+  end
 
   @doc """
   Returns the list of transactions.
@@ -132,6 +143,8 @@ defmodule GraphBanking.Accounts do
 
   """
   def get_transaction!(id), do: Repo.get!(Transaction, id)
+
+  def get_transaction(id), do: Repo.get(Transaction, id)
 
   @doc """
   Creates a transaction.
