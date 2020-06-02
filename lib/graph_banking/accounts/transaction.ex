@@ -1,5 +1,11 @@
 defmodule GraphBanking.Accounts.Transaction do
+  @moduledoc """
+  The `Transaction` Ecto model.
+  Represents a transaction between two accounts.
+  """
+
   use Ecto.Schema
+
   import Ecto.Changeset
 
   alias GraphBanking.Accounts.Account
@@ -20,6 +26,10 @@ defmodule GraphBanking.Accounts.Transaction do
   @required_fields ~w[sender_id recipient_id amount when]a
 
   @doc false
+  @spec changeset(
+          {map, map} | %{:__struct__ => atom | %{__changeset__: map}, optional(atom) => any},
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
+        ) :: Ecto.Changeset.t()
   def changeset(transaction, attrs) do
     transaction
     |> cast(attrs, @optional_fields ++ @required_fields)
