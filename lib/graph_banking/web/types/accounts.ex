@@ -1,7 +1,7 @@
 defmodule GraphBanking.Web.Schema.Types.Accounts do
   use Absinthe.Schema.Notation
 
-  alias GraphBanking.Web.Resolvers.Accounts
+  alias GraphBanking.Accounts.{Account, Transaction}
 
   object :transaction do
     field :id, non_null(:id)
@@ -11,10 +11,10 @@ defmodule GraphBanking.Web.Schema.Types.Accounts do
     field :when, non_null(:string)
 
     field :sender, non_null(:account) do
-      resolve &Accounts.sender_account/3
+      resolve fn (%Transaction{sender: sender}, _, _) -> {:ok, sender} end
     end
     field :recipient, non_null(:account) do
-      resolve &Accounts.recipient_account/3
+      resolve fn (%Transaction{recipient: recipient}, _, _) -> {:ok, recipient} end
     end
   end
 
@@ -22,7 +22,7 @@ defmodule GraphBanking.Web.Schema.Types.Accounts do
     field :id, non_null(:id)
     field :current_balance, non_null(:string)
     field :transactions, :transaction |> non_null() |> list_of() |> non_null() do
-      resolve &Accounts.account_transactions/3
+      resolve fn (%Account{transactions: transactions}, _, _) -> {:ok, transactions} end
     end
   end
 end

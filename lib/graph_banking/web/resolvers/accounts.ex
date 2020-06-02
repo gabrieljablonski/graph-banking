@@ -1,6 +1,6 @@
 defmodule GraphBanking.Web.Resolvers.Accounts do
   alias GraphBanking.Accounts
-  alias GraphBanking.Accounts.{Account, Transaction}
+  alias GraphBanking.Accounts.Account
 
   @spec all_accounts(any, any, any) :: {:ok, any}
   def all_accounts(_root, _args, _info) do
@@ -12,35 +12,12 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
     {:ok, Accounts.list_transactions()}
   end
 
-  @spec sender_account(GraphBanking.Accounts.Transaction.t(), any, any) ::
-          {:error, any} | {:ok, GraphBanking.Accounts.Account.t()}
-  def sender_account(%Transaction{sender_id: id}, _args, _info) do
-    case account = try_get_account(id) do
-      %Account{} -> {:ok, account}
-      {:not_found, message} -> {:error, message}
-    end
-  end
-
-  @spec recipient_account(GraphBanking.Accounts.Transaction.t(), any, any) ::
-          {:error, any} | {:ok, GraphBanking.Accounts.Account.t()}
-  def recipient_account(%Transaction{recipient_id: id}, _args, _info) do
-    case account = try_get_account(id) do
-      %Account{} -> {:ok, account}
-      {:not_found, message} -> {:error, message}
-    end
-  end
-
   @spec account(any, %{id: any}, any) :: any
   def account(_root, %{id: id}, _info) do
     case account = try_get_account(id) do
       %Account{} -> {:ok, account}
       {:not_found, message} -> {:error, message}
     end
-  end
-
-  @spec account_transactions(GraphBanking.Accounts.Account.t(), any, any) :: {:ok, any}
-  def account_transactions(%Account{} = account, _args, _info) do
-    {:ok, Accounts.list_transactions(account)}
   end
 
   defp try_get_account(id) do

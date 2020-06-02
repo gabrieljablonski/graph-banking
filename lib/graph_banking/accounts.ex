@@ -104,17 +104,6 @@ defmodule GraphBanking.Accounts do
     Account.changeset(account, attrs)
   end
 
-  @spec list_transactions(atom | %{id: any}) :: any
-  @doc """
-  Returns a list of transactions related to `account`.
-  """
-  def list_transactions(%Account{} = account) do
-    from(
-       t in Transaction,
-       where: t.sender_id == ^account.id or t.recipient_id == ^account.id
-    ) |> Repo.all()
-  end
-
   @doc """
   Returns the list of transactions.
 
