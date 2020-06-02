@@ -2,10 +2,14 @@ defmodule GraphBanking.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias GraphBanking.Accounts.Transaction
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "accounts" do
     field :current_balance, :decimal
+
+    has_many :transactions, Transaction
 
     timestamps()
   end
