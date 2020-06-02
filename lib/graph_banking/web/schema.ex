@@ -3,10 +3,7 @@ defmodule GraphBanking.Web.Schema do
 
   alias GraphBanking.{Web, Accounts}
 
-  object :account do
-    field :id, non_null(:id)
-    field :current_balance, non_null(:string)
-  end
+  import_types GraphBanking.Web.Schema.Types.Accounts
 
   query do
     field :all_accounts, :account |> non_null() |> list_of() |>  non_null() do
