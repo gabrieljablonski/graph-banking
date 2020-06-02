@@ -1,6 +1,8 @@
 defmodule GraphBanking.Web.Schema.Types.Accounts do
   use Absinthe.Schema.Notation
 
+  alias GraphBanking.Repo
+  alias GraphBanking.Web.Resolvers
   alias GraphBanking.Accounts.{Account, Transaction}
 
   object :transaction do
@@ -11,18 +13,37 @@ defmodule GraphBanking.Web.Schema.Types.Accounts do
     field :when, non_null(:string)
 
     field :sender, non_null(:account) do
-      resolve fn (%Transaction{sender: sender}, _, _) -> {:ok, sender} end
+      resolve fn(%Transaction{sender_id: id} = transaction, _args, info) ->
+        Resolvers.Accounts.account(transaction, %{id: id}, info)
+      end
     end
     field :recipient, non_null(:account) do
-      resolve fn (%Transaction{recipient: recipient}, _, _) -> {:ok, recipient} end
+      resolve fn(%Transaction{recipient_id: id} = transaction, _args, info) ->
+        Resolvers.Accounts.account(transaction, %{id: id}, info)
+      end
     end
   end
 
   object :account do
     field :id, non_null(:id)
     field :current_balance, non_null(:string)
-    field :transactions, :transaction |> non_null() |> list_of() |> non_null() do
-      resolve fn (%Account{transactions: transactions}, _, _) -> {:ok, transactions} end
+    field :sent_transactions, :transaction |> non_null() |> list_of() |> non_null() do
+      resolve fn(%Account{} = account, _, _) ->
+        transactions =
+          account
+          |> Ecto.assoc(:sent_transactions)
+          |> Repo.all
+        {:ok, transactions}
+      end
+    end
+    field :received_transactions, :transaction |> non_null() |> list_of() |> non_null() do
+      resolve fn(%Account{} = account, _, _) ->
+        transactions =
+          account
+          |> Ecto.assoc(:received_transactions)
+          |> Repo.all
+        {:ok, transactions}
+      end
     end
   end
 end

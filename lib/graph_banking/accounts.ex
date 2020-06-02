@@ -4,8 +4,8 @@ defmodule GraphBanking.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias GraphBanking.Repo
 
+  alias GraphBanking.Repo
   alias GraphBanking.Accounts.{Account, Transaction}
 
   @doc """

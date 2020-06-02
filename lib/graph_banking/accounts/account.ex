@@ -9,7 +9,8 @@ defmodule GraphBanking.Accounts.Account do
   schema "accounts" do
     field :current_balance, :decimal
 
-    has_many :transactions, Transaction
+    has_many :sent_transactions, Transaction, foreign_key: :sender_id
+    has_many :received_transactions, Transaction, foreign_key: :recipient_id
 
     timestamps()
   end

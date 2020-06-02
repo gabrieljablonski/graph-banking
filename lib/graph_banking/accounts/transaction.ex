@@ -7,10 +7,11 @@ defmodule GraphBanking.Accounts.Transaction do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "transactions" do
-    belongs_to :sender, Account
-    belongs_to :recipient, Account
     field :amount, :decimal
     field :when, :utc_datetime
+
+    belongs_to :sender, Account
+    belongs_to :recipient, Account
 
     timestamps()
   end
