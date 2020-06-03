@@ -31,7 +31,7 @@ The project implements a GraphQL API simulating a bank, offering the following c
 ### Queries
 
 ```graphql
-account(id: "<account_id>") {
+account(id: "<account_uuid>") {
   id
   currentBalance
   sentTransactions {
