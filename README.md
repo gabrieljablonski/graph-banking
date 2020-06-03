@@ -59,7 +59,7 @@ openAccount(balance: <balance>) {
 ```
 ```graphql
 transferMoney(sender: "<account_uuid>", recipient: "<account_uuid>", amount: <amount>) {
-  uuid
+  id
   recipient {
     id
     currentBalance
