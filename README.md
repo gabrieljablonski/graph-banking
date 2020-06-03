@@ -34,9 +34,15 @@ The project implements a GraphQL API simulating a bank, offering the following c
 account {
   id
   currentBalance
-  transactions {
+  sentTransactions {
     id
-    recipient
+    recipientId
+    amount
+    when
+  }
+  receivedTransactions {
+    id
+    senderId
     amount
     when
   }
