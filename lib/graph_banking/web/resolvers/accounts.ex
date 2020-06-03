@@ -3,6 +3,7 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
   The Absinthe resolvers associated directly to bank accounts.
   """
 
+  alias GraphBanking.Utils
   alias GraphBanking.Accounts
   alias GraphBanking.Accounts.{Account, Transaction}
 
@@ -16,9 +17,9 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
 
   ## Examples
 
-      iex > GraphBanking.Web.Resolvers.Accounts.all_accounts()
+      iex > all_accounts()
       [
-        %GraphBanking.Accounts.Account{
+        %Account{
           id: "6f5e4190-50a0-43c0-ac32-7b0d6f6ed4e3",
           current_balance: #Decimal<100.00>
         },
@@ -37,9 +38,9 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
 
   ## Examples
 
-      iex > GraphBanking.Web.Resolvers.Accounts.all_transactions()
+      iex > all_transactions()
       [
-        %GraphBanking.Accounts.Transaction{
+        %Transaction{
           id: "cb0306b5-7e8e-49c4-8090-819117a401b7",
           sender_id: "253c7262-90ac-4a03-abd6-46590f15e503",
           recipient_id: "2c1bbf32-3634-4d26-822b-98cdbb49c36a",
@@ -61,10 +62,10 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
 
   ## Examples
 
-      iex > GraphBanking.Web.Resolvers.Accounts.account_by_id(
+      iex > account_by_id(
       ... >   _, %{id: "cb0306b5-7e8e-49c4-8090-819117a401b7"}, _
       ... > )
-      %GraphBanking.Accounts.Account{
+      %Account{
         id: "6f5e4190-50a0-43c0-ac32-7b0d6f6ed4e3",
         current_balance: #Decimal<100.00>
       }
@@ -72,8 +73,11 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
   @spec account_by_id(any, %{id: any}, any) ::
           {:error, any} | {:ok, account()}
   def account_by_id(_root, %{id: id}, _info) do
-    case account = try_get_account(id) do
-      %Account{} -> {:ok, account}
+    with :ok <- Utils.validate_uuid(id),
+         %Account{} = account <- try_get_account(id) do
+      {:ok, account}
+    else
+      {:invalid_uuid, message} -> {:error, message}
       {:not_found, message} -> {:error, message}
     end
   end
@@ -93,10 +97,10 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
 
   ## Examples
 
-    iex > GraphBanking.Web.Resolvers.Accounts.open_account(
+    iex > open_account(
     ... >   _, %{balance: 100.10}, _
     ... > )
-    %GraphBanking.Accounts.Account{
+    %Account{
       id: "6f5e4190-50a0-43c0-ac32-7b0d6f6ed4e3",
       current_balance: #Decimal<100.10>
     }
@@ -125,7 +129,7 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
 
   ## Examples
 
-      iex > GraphBanking.Web.Resolvers.Accounts.transfer_money(
+      iex > transfer_money(
       ... >   _, %{sender: "<sender uuid>", recipient: "<recipient uuid>", amount: 100.0}, _
       ... > )
       %Transaction{
@@ -139,7 +143,12 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
   @spec transfer_money(any, %{amount: any, sender: :id, recipient: :id}, number()) ::
           {:error, transaction()}
   def transfer_money(_root, %{sender: sender, recipient: recipient, amount: amount}, _info) do
-    do_transfer_money(sender, recipient, amount)
+    with :ok <- Utils.validate_uuid(sender),
+         :ok <- Utils.validate_uuid(sender) do
+      do_transfer_money(sender, recipient, amount)
+    else
+      {:invalid_uuid, message} -> {:error, message}
+    end
   end
 
   defp do_transfer_money(sender, sender, _) do

@@ -10,7 +10,6 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 alias GraphBanking.Accounts.Account
-alias GraphBanking.Accounts.Transaction
 
 GraphBanking.Repo.insert!(%Account{current_balance: 100.0})
 GraphBanking.Repo.insert!(%Account{current_balance: 520.15})
