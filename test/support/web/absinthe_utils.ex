@@ -1,16 +1,16 @@
 defmodule GraphBanking.Test.Support.Web.AbsintheUtils do
-  def build_query(query, query_name) do
+  def build_query(query) do
     %{
-      "operationName" => query_name,
-      "query" => "query #{query_name} #{query}",
+      "operationName" => "",
+      "query" => "query #{query}",
       "variables" => "{}"
     }
   end
 
-  def build_mutation(mutation) do
+  def build_mutation(query) do
     %{
       "operation_name" => "",
-      "query" => mutation,
+      "query" => "mutation #{query}",
       "variables" => "{}"
     }
   end

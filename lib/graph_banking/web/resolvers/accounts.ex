@@ -93,7 +93,7 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
   Open a new account with a starting balance of `balance` and returns it.
   `balance` must be non-negative.
 
-  When balance is non_negative, returns `{:ok, %GraphBanking.Accounts.Account{}}`.
+  When balance is non-negative, returns `{:ok, %GraphBanking.Accounts.Account{}}`.
 
   ## Examples
 
@@ -121,6 +121,16 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
     end
   end
 
+  defp pre_validate_transaction(sender, sender, _) when is_binary(sender) do
+    {:invalid_accounts, "sender and recipient must be different"}
+  end
+
+  defp pre_validate_transaction(_, _, amount) when is_float(amount) and amount <= 0 do
+    {:invalid_amount, "amount transfered must be positive"}
+  end
+
+  defp pre_validate_transaction(_, _, _), do: :ok
+
   @doc """
   Transfer money from `sender`'s account to `recipient`'s account,
   returning the transaction generated.
@@ -144,19 +154,14 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
           {:error, transaction()}
   def transfer_money(_root, %{sender: sender, recipient: recipient, amount: amount}, _info) do
     with :ok <- Utils.validate_uuid(sender),
-         :ok <- Utils.validate_uuid(sender) do
+         :ok <- Utils.validate_uuid(recipient),
+         :ok <- pre_validate_transaction(sender, recipient, amount) do
       do_transfer_money(sender, recipient, amount)
     else
       {:invalid_uuid, message} -> {:error, message}
+      {:invalid_accounts, message} -> {:error, message}
+      {:invalid_amount, message} -> {:error, message}
     end
-  end
-
-  defp do_transfer_money(sender, sender, _) do
-    {:error, "sender and recipient must be different"}
-  end
-
-  defp do_transfer_money(_, _, amount) when is_float(amount) and amount <= 0 do
-    {:error, "amount tranfered must be positive"}
   end
 
   defp do_transfer_money(sender, recipient, amount)
@@ -169,12 +174,14 @@ defmodule GraphBanking.Web.Resolvers.Accounts do
     end
   end
 
-  defp do_transfer_money(%Account{current_balance: balance}, _, amount)
-       when balance < amount do
-    {:error, "sender's balance ($#{balance}) is insufficient"}
+  defp do_transfer_money(%Account{current_balance: balance} = sender_account, recipient_account, amount) do
+    case Decimal.cmp(balance, amount) do
+      :lt -> {:error, "sender's balance ($#{balance}) is insufficient"}
+      _ -> perform_transaction(sender_account, recipient_account, amount)
+    end
   end
 
-  defp do_transfer_money(
+  defp perform_transaction(
          %Account{id: sender_id, current_balance: sender_balance} = sender_account,
          %Account{id: recipient_id, current_balance: recipient_balance} = recipient_account,
          amount
