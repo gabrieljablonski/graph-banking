@@ -31,39 +31,39 @@ The project implements a GraphQL API simulating a bank, offering the following c
 ### Queries
 
 ```graphql
-    account {
-      id
-      currentBalance
-      transactions {
-        id
-        recipient
-        amount
-        when
-      }
-    }
+account {
+  id
+  currentBalance
+  transactions {
+    id
+    recipient
+    amount
+    when
+  }
+}
 ```
 
 ### Mutations
 
 ```graphql
 openAccount(balance: <balance>) {
-    id
-    currentBalance
+  id
+  currentBalance
 }
 ```
 ```graphql
 transferMoney(sender: "<account_uuid>", address: "<account_uuid>", amount: <amount>) {
-    uuid
-    address
-    amount
-    when
+  uuid
+  address
+  amount
+  when
 }
 ```
 
 ## Running
 
 With [Elixir](https://elixir-lang.org/), [Phoenix Framework](https://www.phoenixframework.org/), and [PostgreSQL](https://www.postgresql.org/)
-installed and configured, run the following commands to acquire project dependencies:
+installed and configured, run the following command to acquire project dependencies:
 
 ```sh
 mix deps.get
