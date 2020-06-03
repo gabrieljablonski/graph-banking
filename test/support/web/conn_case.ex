@@ -1,4 +1,4 @@
-defmodule GraphBanking.Web.ConnCase do
+defmodule GraphBanking.Test.Support.Web.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule GraphBanking.Web.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use GraphBanking.Web.ConnCase, async: true`, although
+  by setting `use GraphBanking.Test.Support.Web.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,7 +22,7 @@ defmodule GraphBanking.Web.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import GraphBanking.Web.ConnCase
+      import GraphBanking.Test.Support.Web.ConnCase
 
       alias GraphBanking.Web.Router.Helpers, as: Routes
 
@@ -38,6 +38,10 @@ defmodule GraphBanking.Web.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(GraphBanking.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.put_req_header("content-type", "application/json")
+
+    {:ok, conn: conn}
   end
 end

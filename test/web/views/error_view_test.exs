@@ -1,5 +1,5 @@
 defmodule GraphBanking.Web.ErrorViewTest do
-  use GraphBanking.Web.ConnCase, async: true
+  use GraphBanking.Test.Support.Web.ConnCase, async: true
 
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View

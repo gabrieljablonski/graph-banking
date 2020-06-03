@@ -1,4 +1,4 @@
-defmodule GraphBanking.Web.ChannelCase do
+defmodule GraphBanking.Test.Support.Web.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule GraphBanking.Web.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use GraphBanking.Web.ChannelCase, async: true`, although
+  by setting `use GraphBanking.Test.Support.Web.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,7 +21,7 @@ defmodule GraphBanking.Web.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import GraphBanking.Web.ChannelCase
+      import GraphBanking.Test.Support.Web.ChannelCase
 
       # The default endpoint for testing
       @endpoint GraphBanking.Web.Endpoint

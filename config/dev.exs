@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :graph_banking, GraphBanking.Repo,
   username: "postgres",
-  password: "123",
+  password: "postgres",
   database: "graph_banking_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
