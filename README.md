@@ -78,7 +78,7 @@ installed and configured, run the following command to acquire project dependenc
 mix deps.get
 ```
 
-Edit the [config/dev.exs](./config/dev.exs) according to desired configurations, and run the following command to setup the database:
+Edit the [config/dev.exs](./config/dev.exs) file according to desired configurations, and run the following command to setup the database:
 
 ```sh
 mix ecto.setup
